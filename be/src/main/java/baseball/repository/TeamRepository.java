@@ -1,6 +1,6 @@
-package repository;
+package baseball.repository;
 
-import domain.Team;
+import baseball.domain.Team;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TeamRepository extends CrudRepository<Team, Long> {

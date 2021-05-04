@@ -1,4 +1,4 @@
-package domain;
+package baseball.domain;
 
 import org.springframework.data.annotation.Id;
 
