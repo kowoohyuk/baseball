@@ -4,7 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Team {
 
@@ -13,12 +14,12 @@ public class Team {
     private String name;
 
     @MappedCollection(idColumn = "team_id", keyColumn = "id")
-    private Map<Long, Player> players = new HashMap<>();
+    private Set<Player> players = new HashSet<>();
 
     private Team(){
     }
 
-    public Team(String name, Map<Long, Player> players) {
+    public Team(String name, Set<Player> players) {
         this.name = name;
         this.players = players;
     }
@@ -35,15 +36,11 @@ public class Team {
         return name;
     }
 
-    public Map<Long, Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 
     public void addPlayer(Player player) {
-        players.put(player.getId(), player);
-    }
-
-    public Player getPlayerByPlayerId(Long playerId) {
-        return players.get(playerId);
+        players.add(player);
     }
 }

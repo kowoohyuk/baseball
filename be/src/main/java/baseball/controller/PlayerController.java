@@ -1,5 +1,7 @@
 package baseball.controller;
 
+import baseball.PlayerDTO;
+import baseball.TeamDTO;
 import baseball.domain.Player;
 import baseball.domain.Team;
 import baseball.repository.TeamRepository;
@@ -19,10 +21,13 @@ public class PlayerController {
         this.teamRepository = teamRepository;
     }
 
-    @PostMapping("/{teamId}/players")
-    public ResponseEntity createPlayerList(@PathVariable Long teamId,@RequestBody Player player) {
-        Team team = teamRepository.findById(teamId).get();
-        team.addPlayer(player);
+    @PostMapping("/players")
+    public ResponseEntity createPlayerList(@RequestBody TeamDTO teamDTO) {
+        Team team = teamRepository.findById(teamDTO.getId()).get();
+        for(PlayerDTO player : teamDTO.getPlayers()){
+            System.out.println(player);
+            team.addPlayer(player.toPlayer());
+        }
         teamRepository.save(team);
         return new ResponseEntity<>(HttpStatus.OK);
     }
