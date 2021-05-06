@@ -3,6 +3,7 @@ package baseball.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Team {
@@ -11,10 +12,15 @@ public class Team {
     private Long id;
     private String name;
 
-    @MappedCollection(idColumn = "team_id")
-    private Map<Long, Player> players;
+    @MappedCollection(idColumn = "team_id", keyColumn = "id")
+    private Map<Long, Player> players = new HashMap<>();
 
-    public Team() {
+    private Team(){
+    }
+
+    public Team(String name, Map<Long, Player> players) {
+        this.name = name;
+        this.players = players;
     }
 
     public Team(String name) {

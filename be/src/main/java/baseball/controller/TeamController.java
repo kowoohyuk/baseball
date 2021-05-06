@@ -17,7 +17,7 @@ public class TeamController {
         this.teamRepository = teamRepository;
     }
 
-    @PostMapping
+    @PostMapping("/team")
     public ResponseEntity createTeam(@RequestBody Team team) {
         teamRepository.save(team);
         return new ResponseEntity<>(HttpStatus.OK);

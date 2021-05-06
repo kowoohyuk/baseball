@@ -1,5 +1,6 @@
 package baseball.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
@@ -9,16 +10,19 @@ public class Player {
     private Long id;
     private String name;
     private String role;
+    private Long teamId;
 
-    @Column(value = "plate_status")
+    @Column(value = "player_status")
     private boolean status;
 
     private Player() {
     }
 
-    public Player(Long id, String name) {
-        this.id = id;
+    public Player(String name, String role, Long teamId, boolean status) {
         this.name = name;
+        this.role = role;
+        this.teamId = teamId;
+        this.status = status;
     }
 
     public Long getId() {
@@ -33,8 +37,12 @@ public class Player {
         return role;
     }
 
+    public Long getTeamId() {
+        return teamId;
+    }
+
     public boolean isStatus() {
         return status;
     }
-
 }
+
