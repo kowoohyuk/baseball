@@ -1,15 +1,15 @@
-package baseball.dto;
+package baseball.dto.request;
 
-public class GamePlayerDetaileDTO {
+public class GamePlayerDetailRequestDto {
 
     private int atBat;
     private int outCount;
     private int plateAppearance;
 
-    public GamePlayerDetaileDTO() {
+    public GamePlayerDetailRequestDto() {
     }
 
-    public GamePlayerDetaileDTO(int atBat, int outCount, int plateAppearance) {
+    public GamePlayerDetailRequestDto(int atBat, int outCount, int plateAppearance) {
         this.atBat = atBat;
         this.outCount = outCount;
         this.plateAppearance = plateAppearance;

@@ -1,12 +1,15 @@
-package baseball.dto;
+package baseball.dto.request;
+
+import baseball.domain.Player;
 
 import java.util.List;
 
-public class TeamDTO {
+public class TeamRequestDto {
+
     private Long id;
     private String name;
 
-    private List<PlayerDTO> players;
+    private List<Player> players;
 
     public Long getId() {
         return id;
@@ -16,7 +19,7 @@ public class TeamDTO {
         return name;
     }
 
-    public List<PlayerDTO> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 }

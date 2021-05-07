@@ -1,7 +1,7 @@
 package baseball.controller;
 
-import baseball.dto.PlayerDTO;
-import baseball.dto.TeamDTO;
+import baseball.domain.Player;
+import baseball.dto.request.TeamRequestDto;
 import baseball.domain.Team;
 import baseball.repository.TeamRepository;
 import org.springframework.http.HttpStatus;
@@ -20,10 +20,10 @@ public class PlayerController {
     }
 
     @PostMapping("/players")
-    public ResponseEntity createPlayerList(@RequestBody TeamDTO teamDTO) {
-        Team team = teamRepository.findById(teamDTO.getId()).get();
-        for(PlayerDTO player : teamDTO.getPlayers()){
-            team.addPlayer(player.toPlayer());
+    public ResponseEntity createPlayerList(@RequestBody TeamRequestDto teamRequestDTO) {
+        Team team = teamRepository.findById(teamRequestDTO.getId()).get();
+        for (Player player : teamRequestDTO.getPlayers()) {
+            team.addPlayer(player);
         }
         teamRepository.save(team);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -1,6 +1,6 @@
 package baseball.domain;
 
-import baseball.dto.GamePlayerDetaileDTO;
+import baseball.dto.request.GamePlayerDetailRequestDto;
 
 public class GamePlayerDetail {
 
@@ -12,10 +12,10 @@ public class GamePlayerDetail {
     public GamePlayerDetail() {
     }
 
-    public void updatePlayerDetail(GamePlayerDetaileDTO gamePlayerDetaileDto) {
-        this.atBat = gamePlayerDetaileDto.getAtBat();
-        this.outCount = gamePlayerDetaileDto.getOutCount();
-        this.plateAppearance = gamePlayerDetaileDto.getPlateAppearance();
+    public void updatePlayerDetail(GamePlayerDetailRequestDto gamePlayerDetailRequestDto) {
+        this.atBat = gamePlayerDetailRequestDto.getAtBat();
+        this.outCount = gamePlayerDetailRequestDto.getOutCount();
+        this.plateAppearance = gamePlayerDetailRequestDto.getPlateAppearance();
     }
 
     public Long getId() {
