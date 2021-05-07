@@ -25,7 +25,6 @@ public class PlayerController {
     public ResponseEntity createPlayerList(@RequestBody TeamDTO teamDTO) {
         Team team = teamRepository.findById(teamDTO.getId()).get();
         for(PlayerDTO player : teamDTO.getPlayers()){
-            System.out.println(player);
             team.addPlayer(player.toPlayer());
         }
         teamRepository.save(team);

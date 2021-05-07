@@ -3,6 +3,10 @@ package baseball.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Player {
 
@@ -15,20 +19,20 @@ public class Player {
     @Column(value = "player_status")
     private boolean status;
 
-    private Player() {
-    }
+    @MappedCollection(idColumn = "team_id", keyColumn = "id")
+    private Set<GamePlayerDetail> playerDetails = new HashSet<>();
 
-    public Player(Long id, String name, String role, boolean status) {
-        this.id = id;
-        this.name = name;
-        this.role = role;
-        this.status = status;
+    private Player() {
     }
 
     public Player(String name, String role, boolean status) {
         this.name = name;
         this.role = role;
         this.status = status;
+    }
+
+    public void addPlayer(GamePlayerDetail gamePlayerDetail) {
+        playerDetails.add(gamePlayerDetail);
     }
 
     public Long getId() {
