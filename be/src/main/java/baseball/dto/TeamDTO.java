@@ -1,6 +1,5 @@
-package baseball;
+package baseball.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TeamDTO {
