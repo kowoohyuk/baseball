@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Game {
+
     @Id
     private Long id;
 
@@ -21,6 +22,11 @@ public class Game {
 
     @Column(value = "game_id")
     private Set<GamePlayerDetail> playerDetails = new HashSet<>();
+
+    private Game(Long home, Long away) {
+        this.home = home;
+        this.away = away;
+    }
 
     public void addPlayerDetail(GamePlayerDetail gamePlayerDetail) {
         playerDetails.add(gamePlayerDetail);
@@ -48,5 +54,9 @@ public class Game {
 
     public Set<GamePlayerDetail> getPlayerDetails() {
         return playerDetails;
+    }
+
+    public static Game of(Team home, Team away) {
+        return new Game(home.getId(), away.getId());
     }
 }

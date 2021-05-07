@@ -9,7 +9,6 @@ import java.util.Set;
 public class Player {
 
     @Id
-
     private Long id;
     private String name;
     private String role;
