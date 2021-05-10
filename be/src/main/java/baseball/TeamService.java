@@ -35,8 +35,13 @@ public class TeamService {
 
     public Set<PlayerResponseDto> createPlayerResponseDtoSet(boolean playStatus, Set<Player> team) {
         Set<PlayerResponseDto> playerResponseDtoSet = new HashSet<>();
+        GamePlayerDetail gamePlayerDetail = new GamePlayerDetail();
+
         for (Player player : team) {
-            PlayerResponseDto playerResponseDto = PlayerResponseDto.of(player, gamePlayerDetailByPlayerId(player.getId()));
+            if(playStatus) {
+                gamePlayerDetail = gamePlayerDetailByPlayerId(player.getId());
+            }
+            PlayerResponseDto playerResponseDto = PlayerResponseDto.of(player, gamePlayerDetail);
             playerResponseDtoSet.add(playerResponseDto);
         }
         return playerResponseDtoSet;

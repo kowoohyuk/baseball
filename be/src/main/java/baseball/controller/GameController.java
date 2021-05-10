@@ -47,7 +47,7 @@ public class GameController {
         boolean playStatus = gameService.findPlayStatusById(gameId);
         GameTeamScore gameTeamScore = gameService.LastGameTeamScoreByIdAndTeamId(playStatus, gameId, teamId);
         Long pitcherId = teamService.findPitcherIdByTeamId(teamId);
-        Set<PlayerResponseDto> playerResponseDtoSet = teamService.createPlayerResponseDtoSet(teamService.playersById(teamId));
+        Set<PlayerResponseDto> playerResponseDtoSet = teamService.createPlayerResponseDtoSet(playStatus, teamService.playersById(teamId));
         return TeamResponseDto.of(pitcherId, playerResponseDtoSet, gameTeamScore);
     }
 }

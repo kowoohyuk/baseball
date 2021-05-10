@@ -36,8 +36,11 @@ public class GameService {
         return gameRepository.findById(gameId).orElseThrow(NullPointerException::new);
     }
 
-    public GameTeamScore LastGameTeamScoreByIdAndTeamId(Long gameId, Long teamId) {
-        return gameRepository.findLastGameTeamScoreByIdAndTeamId(gameId, teamId).orElseThrow();
+    public GameTeamScore LastGameTeamScoreByIdAndTeamId(boolean playStatus, Long gameId, Long teamId) {
+        if (playStatus) {
+            return gameRepository.findLastGameTeamScoreByIdAndTeamId(gameId, teamId).orElseThrow();
+        }
+        return new GameTeamScore();
     }
 
     public boolean findPlayStatusById(Long gameId) {
