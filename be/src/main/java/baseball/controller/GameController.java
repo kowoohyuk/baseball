@@ -26,11 +26,12 @@ public class GameController {
 
     public GameController(GameService gameService, TeamService teamService) {
         this.gameService = gameService;
+        this.teamService = teamService;
     }
 
     @GetMapping
     public ResponseEntity<GameListDto> createGame() {
-        GameListDto gameListDto = GameListDto.of(gameService.createGameDtoList());
+        GameListDto gameListDto = GameListDto.of(gameService.createGameDtoList(teamService.findTeams()));
         return ResponseEntity.ok().body(gameListDto);
     }
 

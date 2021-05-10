@@ -2,12 +2,14 @@ package baseball.repository;
 
 import baseball.domain.GamePlayerDetail;
 import baseball.domain.Team;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TeamRepository extends CrudRepository<Team, Long> {
+
     List<Team> findAll();
 
     @Query("SELECT game_player_detail.id, game_player_detail.at_bat, game_player_detail.out_count, game_player_detail.plate_appearance" +

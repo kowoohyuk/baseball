@@ -28,4 +28,13 @@ public class GameTeamScore {
     public int getRound() {
         return round;
     }
+
+    public int largerRound(GameTeamScore otherTeam) {
+        int otherTeamRound = otherTeam.getRound();
+        return Math.max(score, otherTeamRound);
+    }
+
+    public boolean isTurn(int round){
+        return round!=this.round;
+    }
 }

@@ -9,14 +9,18 @@ import java.util.Set;
 public class TeamResponseDto {
 
     @JsonProperty("member_list")
-    private List<PlayerResponseDto> playerList;
+    private Set<PlayerResponseDto> playerList;
     private int score;
-    private Long pitcher;
+    private Long pitcherId;
 
-    public TeamResponseDto(Long pitcher, int score,  List<PlayerResponseDto> playerList){
-        this.pitcher = pitcher;
+    @JsonIgnore
+    private GameTeamScore gameTeamScore;
+
+    public TeamResponseDto(Long pitcherId, int score, Set<PlayerResponseDto> playerSet, GameTeamScore gameTeamScore) {
+        this.pitcherId = pitcherId;
         this.score = score;
-        this.playerList = playerList;
+        this.playerList = playerSet;
+        this.gameTeamScore = gameTeamScore;
     }
 
     public GameTeamScore getGameTeamScore() {

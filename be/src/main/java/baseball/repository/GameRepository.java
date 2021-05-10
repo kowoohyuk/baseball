@@ -1,6 +1,8 @@
 package baseball.repository;
 
 import baseball.domain.Game;
+import baseball.domain.GameTeamScore;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

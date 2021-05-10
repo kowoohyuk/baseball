@@ -33,4 +33,11 @@ public class GameResponseDto {
     public TeamResponseDto getAway() {
         return away;
     }
+
+    public static GameResponseDto of(TeamResponseDto home, TeamResponseDto away) {
+        GameTeamScore homeGameTeamScore = home.getGameTeamScore();
+        GameTeamScore awayGameTeamScore = away.getGameTeamScore();
+        int lastRound = homeGameTeamScore.largerRound(awayGameTeamScore);
+        return new GameResponseDto(lastRound, awayGameTeamScore.isTurn(lastRound), home, away);
+    }
 }

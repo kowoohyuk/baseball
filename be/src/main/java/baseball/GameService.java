@@ -15,17 +15,13 @@ import java.util.List;
 public class GameService {
 
     private GameRepository gameRepository;
-    private TeamRepository teamRepository;
 
-    public GameService(GameRepository gameRepository, TeamRepository teamRepository) {
+    public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
-        this.teamRepository = teamRepository;
     }
 
-    public List<GameDto> createGameDtoList() {
-        List<Team> teamList = teamRepository.findAll();
+    public List<GameDto> createGameDtoList(List<Team> teamList) {
         List<GameDto> gameDtoList = new ArrayList<>();
-
         Collections.shuffle(teamList);
 
         for (int i = 0; i < teamList.size() - 1; i += 2) {
