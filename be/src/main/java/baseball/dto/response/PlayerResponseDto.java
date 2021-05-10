@@ -44,8 +44,8 @@ public class PlayerResponseDto {
         return plate_appearance;
     }
 
-    public static PlayerResponseDto of (Player player, GamePlayerDetail gamePlayerDetail){
-        return new PlayerResponseDto(player.getId(),player.getName(),player.isStatus(),
+    public static PlayerResponseDto of(Player player, GamePlayerDetail gamePlayerDetail) {
+        return new PlayerResponseDto(player.getId(), player.getName(), player.isStatus(),
                 gamePlayerDetail.getAtBat(), gamePlayerDetail.getOutCount(), gamePlayerDetail.getPlateAppearance());
     }
 }

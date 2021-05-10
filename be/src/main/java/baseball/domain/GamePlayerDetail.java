@@ -1,9 +1,11 @@
 package baseball.domain;
 
 import baseball.dto.request.GamePlayerDetailRequestDto;
+import org.springframework.data.annotation.Id;
 
 public class GamePlayerDetail {
 
+    @Id
     private Long id;
     private int atBat = 0;
     private int outCount = 0;

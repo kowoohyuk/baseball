@@ -1,6 +1,6 @@
 package baseball.dto.response;
 
-import java.util.List;
+import baseball.domain.GameTeamScore;
 
 public class GameResponseDto {
     private int round;

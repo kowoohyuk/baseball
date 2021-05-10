@@ -1,13 +1,54 @@
+use baseball;
+
+drop table team;
 create table team (
     id int not null auto_increment,
     name varchar(45) not null,
     primary key (id)
 );
 
+drop table player;
 create table player (
     id int not null auto_increment,
     name varchar(45) not null,
+    role varchar(45),
+    player_status tinyint,
     team_id int not null,
     primary key (id),
     foreign key (team_id) references team(id)
+);
+
+drop table game;
+create table game (
+                        id int not null auto_increment,
+                        away_team_id int not null,
+                        home_team_id int not null,
+                        primary key (id),
+                        foreign key (away_team_id) references team(id),
+                        foreign key (home_team_id) references team(id)
+);
+
+drop table game_player_detail;
+create table game_player_detail (
+                        id int not null auto_increment,
+                        at_bat int,
+                        out_count int,
+                        plate_appearance int,
+                        player_id int not null,
+                        game_id int not null,
+                        primary key (id),
+                        foreign key (player_id) references player(id),
+                        foreign key (game_id) references game(id)
+);
+
+drop table game_team_score;
+create table game_team_score (
+                                    id int not null auto_increment,
+                                    score int,
+                                    round int,
+                                    team_id int not null,
+                                    game_id int not null,
+                                    primary key (id),
+                                    foreign key (team_id) references team(id),
+                                    foreign key (game_id) references game(id)
 );

@@ -23,6 +23,9 @@ public class Game {
     @Column(value = "game_id")
     private Set<GamePlayerDetail> playerDetails = new HashSet<>();
 
+    @Column(value = "play_status")
+    private boolean playStatus;
+
     private Game(Long home, Long away) {
         this.home = home;
         this.away = away;
@@ -54,6 +57,10 @@ public class Game {
 
     public Set<GamePlayerDetail> getPlayerDetails() {
         return playerDetails;
+    }
+
+    public boolean getPlayStatus() {
+        return playStatus;
     }
 
     public static Game of(Team home, Team away) {

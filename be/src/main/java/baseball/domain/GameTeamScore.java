@@ -1,10 +1,13 @@
 package baseball.domain;
 
+import org.springframework.data.annotation.Id;
+
 public class GameTeamScore {
 
+    @Id
     private Long id;
-    private int score;
-    private int round;
+    private int score = 0;
+    private int round = 0;
 
     public GameTeamScore() {
     }

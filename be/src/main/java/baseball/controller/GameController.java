@@ -4,7 +4,6 @@ import baseball.GameService;
 import baseball.TeamService;
 import baseball.domain.Game;
 import baseball.domain.GameTeamScore;
-import baseball.domain.Player;
 import baseball.dto.GameListDto;
 import baseball.dto.response.GameResponseDto;
 import baseball.dto.response.PlayerResponseDto;
@@ -15,8 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/games")
@@ -25,7 +23,8 @@ public class GameController {
     private GameService gameService;
     private TeamService teamService;
 
-    public GameController(GameService gameService) {
+
+    public GameController(GameService gameService, TeamService teamService) {
         this.gameService = gameService;
     }
 
@@ -36,29 +35,24 @@ public class GameController {
     }
 
     @GetMapping("/{gameId}")
-    public ResponseEntity<GameResponseDto> roadGame(@PathVariable Long gameId){
+    public ResponseEntity<GameResponseDto> roadGame(@PathVariable Long gameId) {
         Game game = gameService.findGameById(gameId);
-        Long homeTeamId = game.getHome();
-        Long awayTeamId = game.getAway();
-        List<Player> homeTeam = teamService.playersById(homeTeamId);
-        List<PlayerResponseDto> playerResponseDtoList = new ArrayList<>();
-        GameTeamScore homeTeamGameScore= gameService.GameTeamScoreByIdAndTeamId(gameId,homeTeamId);
-        GameTeamScore awayTeamGameScore = gameService.GameTeamScoreByIdAndTeamId(gameId,awayTeamId);
-        int round = homeTeamGameScore.getRound();
-        boolean turn = gameService.readTurn(gameId);
-        Long pitcherId =0L;
-        for(Player player : homeTeam) {
-            if(player.getRole().equals("투수")){
-                pitcherId = player.getId();
-            }
-            PlayerResponseDto playerResponseDto=PlayerResponseDto.of(player,teamService.GamePlayerDetailByPlayerId(player));
-            playerResponseDtoList.add(playerResponseDto);
+        if (game.getPlayStatus()) {
+            TeamResponseDto homeTeamResponseDto = createTeamResponseDto(game.getHome());
+            TeamResponseDto awayTeamResponseDto = createTeamResponseDto(game.getAway());
+            return ResponseEntity.ok().body(GameResponseDto.of(homeTeamResponseDto, awayTeamResponseDto));
         }
-        TeamResponseDto homeTeamResponseDto = new TeamResponseDto(pitcherId,homeTeamGameScore.getScore(),playerResponseDtoList);
 
-        List<Player> awayTeam = teamService.playerById(awayTeamId);
+        TeamResponseDto homeTeamResponseDto = createTeamResponseDto(gameId, game.getHome());
+        TeamResponseDto awayTeamResponseDto = createTeamResponseDto(gameId, game.getAway());
+        return ResponseEntity.ok().body(GameResponseDto.of(homeTeamResponseDto, awayTeamResponseDto));
+    }
 
-        return ResponseEntity.ok().body(new GameResponseDto(round,turn,homeTeamResponseDto,awayTeamResponseDto));
+    private TeamResponseDto createTeamResponseDto(Long gameId, Long teamId) {
+        GameTeamScore gameTeamScore = gameService.LastGameTeamScoreByIdAndTeamId(gameId, teamId);
+        Long pitcherId = teamService.findPitcherIdByTeamId(teamId);
+        Set<PlayerResponseDto> playerResponseDtoSet = teamService.createPlayerResponseDtoSet(teamService.playersById(teamId));
+        return TeamResponseDto.of(pitcherId, playerResponseDtoSet, gameTeamScore);
     }
 
 }

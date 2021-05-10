@@ -16,7 +16,7 @@ public class Player {
     @Column(value = "player_status")
     private boolean status;
 
-    @Column(value = "team_id")
+    @Column(value = "player_id")
     private Set<GamePlayerDetail> playerDetails = new HashSet<>();
 
     private Player() {
