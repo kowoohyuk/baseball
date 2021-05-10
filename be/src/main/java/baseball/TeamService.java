@@ -33,7 +33,7 @@ public class TeamService {
         return teamRepository.gamePlayerDetailByPlayerId(playerId).orElseThrow(NullPointerException::new);
     }
 
-    public Set<PlayerResponseDto> createPlayerResponseDtoSet(Set<Player> team) {
+    public Set<PlayerResponseDto> createPlayerResponseDtoSet(boolean playStatus, Set<Player> team) {
         Set<PlayerResponseDto> playerResponseDtoSet = new HashSet<>();
         for (Player player : team) {
             PlayerResponseDto playerResponseDto = PlayerResponseDto.of(player, gamePlayerDetailByPlayerId(player.getId()));

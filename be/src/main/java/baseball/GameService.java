@@ -39,4 +39,8 @@ public class GameService {
     public GameTeamScore LastGameTeamScoreByIdAndTeamId(Long gameId, Long teamId) {
         return gameRepository.findLastGameTeamScoreByIdAndTeamId(gameId, teamId).orElseThrow();
     }
+
+    public boolean findPlayStatusById(Long gameId) {
+        return gameRepository.findPlayStatusById(gameId);
+    }
 }

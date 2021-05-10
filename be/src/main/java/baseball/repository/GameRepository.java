@@ -16,4 +16,7 @@ public interface GameRepository extends CrudRepository<Game, Long> {
             "INNER JOIN game ON game.id = game_team_score.game_id " +
             "WHERE game_team_score.game_id = :gameId AND game_team_score.team_id = :teamId")
     Optional<GameTeamScore> findLastGameTeamScoreByIdAndTeamId(Long gameId, Long teamId);
+
+    @Query("SELECT game.play_status FROM game WHERE game.id = :gameId")
+    boolean findPlayStatusById(Long gameId);
 }
