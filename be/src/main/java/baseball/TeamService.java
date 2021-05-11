@@ -24,7 +24,7 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
-    public Set<Player> playersById(Long TeamId) {
+    public List<Player> playersById(Long TeamId) {
         Team team = teamRepository.findById(TeamId).orElseThrow(NullPointerException::new);
         return team.getPlayers();
     }
@@ -33,21 +33,44 @@ public class TeamService {
         return teamRepository.gamePlayerDetailByPlayerId(playerId).orElseThrow(NullPointerException::new);
     }
 
-    public Set<PlayerResponseDto> createPlayerResponseDtoSet(boolean playStatus, Set<Player> team) {
-        Set<PlayerResponseDto> playerResponseDtoSet = new HashSet<>();
+    public List<PlayerResponseDto> createPlayerResponseDtoList(boolean playStatus, List<Player> team) {
+        List<PlayerResponseDto> playerResponseDtoList = new ArrayList<>();
         GamePlayerDetail gamePlayerDetail = new GamePlayerDetail();
 
         for (Player player : team) {
-            if(playStatus) {
+            if (playStatus) {
                 gamePlayerDetail = gamePlayerDetailByPlayerId(player.getId());
             }
             PlayerResponseDto playerResponseDto = PlayerResponseDto.of(player, gamePlayerDetail);
-            playerResponseDtoSet.add(playerResponseDto);
+            playerResponseDtoList.add(playerResponseDto);
         }
-        return playerResponseDtoSet;
+        return playerResponseDtoList;
     }
 
-    public Long findPitcherIdByTeamId(Long teamId) {
-        return teamRepository.findPitcherIdById(teamId);
+    public Player findPitcherByTeamId(Long teamId) {
+        return teamRepository.findPitcherById(teamId).orElseThrow(NullPointerException::new);
+    }
+
+    public Team findTeamById(Long teamId) {
+        return teamRepository.findTeamById(teamId).orElseThrow(NullPointerException::new);
+    }
+
+    public void changePlayerStatus(boolean playStatus, Game game) {
+        if (!playStatus) {
+            Long homeTeamId = game.getHome();
+            Long awayTeamId = game.getAway();
+
+            Team homeTeam = findTeamById(homeTeamId);
+            Team awayTeam = findTeamById(awayTeamId);
+
+            Player homeFirstPlayer = homeTeam.findFirstPlayer();
+            Player awayPitcher = awayTeam.findPlayer(findPitcherByTeamId(awayTeamId));
+
+            homeFirstPlayer.isPlay();
+            awayPitcher.isPlay();
+
+            teamRepository.save(homeTeam);
+            teamRepository.save(awayTeam);
+        }
     }
 }

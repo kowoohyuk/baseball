@@ -38,18 +38,19 @@ public class GameController {
     }
 
     @GetMapping("/{gameId}")
-    public ResponseEntity<GameResponseDto> roadGame(@PathVariable Long gameId) {
+    public ResponseEntity<GameResponseDto> readGame(@PathVariable Long gameId) {
         Game game = gameService.findGameById(gameId);
-        TeamResponseDto homeTeamResponseDto = createTeamResponseDto(gameId, game.getHome());
-        TeamResponseDto awayTeamResponseDto = createTeamResponseDto(gameId, game.getAway());
+        boolean playStatus = gameService.findPlayStatusById(gameId);
+        teamService.changePlayerStatus(playStatus,game);
+        TeamResponseDto homeTeamResponseDto = createTeamResponseDto(playStatus, gameId, game.getHome());
+        TeamResponseDto awayTeamResponseDto = createTeamResponseDto(playStatus, gameId, game.getAway());
         return ResponseEntity.ok().body(GameResponseDto.of(homeTeamResponseDto, awayTeamResponseDto));
     }
 
-    private TeamResponseDto createTeamResponseDto(Long gameId, Long teamId) {
-        boolean playStatus = gameService.findPlayStatusById(gameId);
+    private TeamResponseDto createTeamResponseDto(boolean playStatus, Long gameId, Long teamId) {
         GameTeamScore gameTeamScore = gameService.LastGameTeamScoreByIdAndTeamId(playStatus, gameId, teamId);
-        Long pitcherId = teamService.findPitcherIdByTeamId(teamId);
-        Set<PlayerResponseDto> playerResponseDtoSet = teamService.createPlayerResponseDtoSet(playStatus, teamService.playersById(teamId));
-        return TeamResponseDto.of(pitcherId, playerResponseDtoSet, gameTeamScore);
+        Player pitcher = teamService.findPitcherByTeamId(teamId);
+        List<PlayerResponseDto> playerResponseDtoList = teamService.createPlayerResponseDtoList(playStatus, teamService.playersById(teamId));
+        return TeamResponseDto.of(pitcher.getId(), playerResponseDtoList, gameTeamScore);
     }
 }

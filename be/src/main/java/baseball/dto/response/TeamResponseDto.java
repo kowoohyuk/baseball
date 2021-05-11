@@ -10,17 +10,17 @@ import java.util.Set;
 public class TeamResponseDto {
 
     @JsonProperty("member_list")
-    private Set<PlayerResponseDto> playerList;
+    private List<PlayerResponseDto> playerList;
     private int score;
     private Long pitcherId;
 
     @JsonIgnore
     private GameTeamScore gameTeamScore;
 
-    public TeamResponseDto(Long pitcherId, int score, Set<PlayerResponseDto> playerSet, GameTeamScore gameTeamScore) {
+    public TeamResponseDto(Long pitcherId, int score, List<PlayerResponseDto> playerList, GameTeamScore gameTeamScore) {
         this.pitcherId = pitcherId;
         this.score = score;
-        this.playerList = playerSet;
+        this.playerList = playerList;
         this.gameTeamScore = gameTeamScore;
     }
 
@@ -28,7 +28,7 @@ public class TeamResponseDto {
         return gameTeamScore;
     }
 
-    public Set<PlayerResponseDto> getPlayerList() {
+    public List<PlayerResponseDto> getPlayerList() {
         return playerList;
     }
 
@@ -40,8 +40,8 @@ public class TeamResponseDto {
         return pitcherId;
     }
 
-    public static TeamResponseDto of(Long pitcherId, Set<PlayerResponseDto> playerSet, GameTeamScore gameTeamScore) {
-        return new TeamResponseDto(pitcherId, gameTeamScore.getScore(), playerSet, gameTeamScore);
+    public static TeamResponseDto of(Long pitcherId, List<PlayerResponseDto> playerList, GameTeamScore gameTeamScore) {
+        return new TeamResponseDto(pitcherId, gameTeamScore.getScore(), playerList, gameTeamScore);
     }
 
 }

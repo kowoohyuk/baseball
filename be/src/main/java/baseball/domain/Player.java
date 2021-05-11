@@ -20,7 +20,7 @@ public class Player {
     @Column(value = "player_id")
     private Set<GamePlayerDetail> playerDetails = new HashSet<>();
 
-    private Player() {
+    public Player() {
     }
 
     public Player(String name, String role, boolean status) {
@@ -49,6 +49,10 @@ public class Player {
         return status;
     }
 
+    public void isPlay(){
+        status = true;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -57,6 +61,19 @@ public class Player {
                 ", role='" + role + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return status == player.status && id.equals(player.id) && name.equals(player.name) && role.equals(player.role) && playerDetails.equals(player.playerDetails);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, role, status, playerDetails);
     }
 }
 

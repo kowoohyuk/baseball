@@ -2,6 +2,7 @@ package baseball.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.util.*;
 
@@ -11,8 +12,8 @@ public class Team {
     private Long id;
     private String name;
 
-    @Column(value = "team_id")
-    private Set<Player> players = new HashSet<>();
+    @MappedCollection(idColumn = "team_id", keyColumn = "id")
+    private List<Player> players = new ArrayList<>();
 
     @Column(value = "team_id")
     private Set<GameTeamScore> scores = new HashSet<>();
@@ -20,7 +21,7 @@ public class Team {
     private Team() {
     }
 
-    public Team(String name, Set<Player> players) {
+    public Team(String name, List<Player> players) {
         this.name = name;
         this.players = players;
     }
@@ -45,7 +46,16 @@ public class Team {
         return name;
     }
 
-    public Set<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
+    }
+
+    public Player findPlayer(Player searchPlayer) {
+        return players.stream().filter(player -> player.equals(searchPlayer)).findFirst()
+                .orElseThrow(NullPointerException::new);
+    }
+
+    public Player findFirstPlayer() {
+        return players.get(0);
     }
 }
