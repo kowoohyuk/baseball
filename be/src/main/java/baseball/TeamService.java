@@ -1,5 +1,6 @@
 package baseball;
 
+import baseball.domain.Game;
 import baseball.domain.GamePlayerDetail;
 import baseball.domain.Player;
 import baseball.domain.Team;
@@ -7,9 +8,8 @@ import baseball.dto.response.PlayerResponseDto;
 import baseball.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class TeamService {

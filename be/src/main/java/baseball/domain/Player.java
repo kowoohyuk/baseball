@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Player {
