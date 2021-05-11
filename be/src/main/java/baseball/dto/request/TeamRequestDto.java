@@ -10,7 +10,7 @@ public class TeamRequestDto {
     private Long id;
     private String name;
 
-    private List<Player> players;
+    private List<PlayerDto> players;
 
     public Long getId() {
         return id;
@@ -20,7 +20,7 @@ public class TeamRequestDto {
         return name;
     }
 
-    public List<Player> getPlayers() {
+    public List<PlayerDto> getPlayers() {
         return players;
     }
 }

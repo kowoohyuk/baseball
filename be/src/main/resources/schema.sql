@@ -13,7 +13,7 @@ create table player (
     id int not null auto_increment,
     name varchar(45) not null,
     role varchar(45),
-    player_status tinyint,
+    player_status tinyint(1) not null default 0,
     team_id int not null,
     primary key (id),
     foreign key (team_id) references team(id)
@@ -24,6 +24,7 @@ create table game (
                         id int not null auto_increment,
                         away_team_id int not null,
                         home_team_id int not null,
+                        play_status tinyint(1) not null default 0,
                         primary key (id),
                         foreign key (away_team_id) references team(id),
                         foreign key (home_team_id) references team(id)
