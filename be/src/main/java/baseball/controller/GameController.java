@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/games")
@@ -41,7 +40,7 @@ public class GameController {
     public ResponseEntity<GameResponseDto> readGame(@PathVariable Long gameId) {
         Game game = gameService.findGameById(gameId);
         boolean playStatus = gameService.findPlayStatusById(gameId);
-        teamService.changePlayerStatus(playStatus,game);
+        teamService.changePlayerStatus(playStatus, game);
         TeamResponseDto homeTeamResponseDto = createTeamResponseDto(playStatus, gameId, game.getHome());
         TeamResponseDto awayTeamResponseDto = createTeamResponseDto(playStatus, gameId, game.getAway());
         return ResponseEntity.ok().body(GameResponseDto.of(homeTeamResponseDto, awayTeamResponseDto));
@@ -50,7 +49,7 @@ public class GameController {
     private TeamResponseDto createTeamResponseDto(boolean playStatus, Long gameId, Long teamId) {
         GameTeamScore gameTeamScore = gameService.LastGameTeamScoreByIdAndTeamId(playStatus, gameId, teamId);
         Player pitcher = teamService.findPitcherByTeamId(teamId);
-        List<PlayerResponseDto> playerResponseDtoList = teamService.createPlayerResponseDtoList(playStatus, teamService.playersById(teamId));
+        List<PlayerResponseDto> playerResponseDtoList = gameService.createPlayerResponseDtoList(gameId, playStatus, teamService.playersById(teamId));
         return TeamResponseDto.of(pitcher.getId(), playerResponseDtoList, gameTeamScore);
     }
 }

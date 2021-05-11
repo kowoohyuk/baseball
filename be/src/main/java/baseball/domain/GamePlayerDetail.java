@@ -8,23 +8,26 @@ public class GamePlayerDetail {
 
     @Id
     private Long id;
-    @Column(value = "game_id")
-    private Long gameId;
-    private int atBat = 0;
-    private int outCount = 0;
-    private int plateAppearance = 0;
+    private int atBat;
+    private int outCount;
+    private int plateAppearance;
+
+    @Column(value = "player_id")
+    private Long playerId;
 
     public GamePlayerDetail() {
+    }
+
+    public GamePlayerDetail( int atBat, int outCount, int plateAppearance) {
+        this.atBat = atBat;
+        this.outCount = outCount;
+        this.plateAppearance = plateAppearance;
     }
 
     public void updatePlayerDetail(GamePlayerDetailRequestDto gamePlayerDetailRequestDto) {
         this.atBat = gamePlayerDetailRequestDto.getAtBat();
         this.outCount = gamePlayerDetailRequestDto.getOutCount();
         this.plateAppearance = gamePlayerDetailRequestDto.getPlateAppearance();
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public int getAtBat() {
@@ -37,5 +40,9 @@ public class GamePlayerDetail {
 
     public int getPlateAppearance() {
         return plateAppearance;
+    }
+
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 }

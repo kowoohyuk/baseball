@@ -29,30 +29,13 @@ public class TeamService {
         return team.getPlayers();
     }
 
-    public GamePlayerDetail gamePlayerDetailByPlayerId(Long playerId) {
-        return teamRepository.gamePlayerDetailByPlayerId(playerId).orElseThrow(NullPointerException::new);
-    }
-
-    public List<PlayerResponseDto> createPlayerResponseDtoList(boolean playStatus, List<Player> team) {
-        List<PlayerResponseDto> playerResponseDtoList = new ArrayList<>();
-        GamePlayerDetail gamePlayerDetail = new GamePlayerDetail();
-
-        for (Player player : team) {
-            if (playStatus) {
-                gamePlayerDetail = gamePlayerDetailByPlayerId(player.getId());
-            }
-            PlayerResponseDto playerResponseDto = PlayerResponseDto.of(player, gamePlayerDetail);
-            playerResponseDtoList.add(playerResponseDto);
-        }
-        return playerResponseDtoList;
-    }
 
     public Player findPitcherByTeamId(Long teamId) {
         return teamRepository.findPitcherById(teamId).orElseThrow(NullPointerException::new);
     }
 
     public Team findTeamById(Long teamId) {
-        return teamRepository.findTeamById(teamId).orElseThrow(NullPointerException::new);
+        return teamRepository.findById(teamId).orElseThrow(NullPointerException::new);
     }
 
     public void changePlayerStatus(boolean playStatus, Game game) {

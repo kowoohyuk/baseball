@@ -69,12 +69,12 @@ public class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return status == player.status && id.equals(player.id) && name.equals(player.name) && role.equals(player.role) && playerDetails.equals(player.playerDetails);
+        return status == player.status && id.equals(player.id) && name.equals(player.name) && role.equals(player.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, role, status, playerDetails);
+        return Objects.hash(id, name, role, status);
     }
 }
 

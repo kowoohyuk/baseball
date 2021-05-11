@@ -1,9 +1,8 @@
 package baseball;
 
-import baseball.domain.Game;
-import baseball.domain.GameTeamScore;
-import baseball.domain.Team;
+import baseball.domain.*;
 import baseball.dto.GameDto;
+import baseball.dto.response.PlayerResponseDto;
 import baseball.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +44,29 @@ public class GameService {
 
     public boolean findPlayStatusById(Long gameId) {
         return gameRepository.findPlayStatusById(gameId);
+    }
+
+    public GamePlayerDetail gamePlayerDetailByPlayerId(Long gameId,Long playerId) {
+        return gameRepository.gamePlayerDetailByPlayerId(gameId,playerId).orElseThrow(NullPointerException::new);
+    }
+
+    public List<PlayerResponseDto> createPlayerResponseDtoList(Long gameId, boolean playStatus, List<Player> team) {
+        Game game = findGameById(gameId);
+        List<PlayerResponseDto> playerResponseDtoList = new ArrayList<>();
+        GamePlayerDetail gamePlayerDetail = new GamePlayerDetail();
+
+        for (Player player : team){
+            Long playerId = player.getId();
+            gamePlayerDetail.setPlayerId(playerId);
+            if (playStatus) {
+                gamePlayerDetail = gamePlayerDetailByPlayerId(gameId, playerId);
+            }
+            game.addPlayerDetail(gamePlayerDetail);
+            gameRepository.save(game);
+            PlayerResponseDto playerResponseDto = PlayerResponseDto.of(player, gamePlayerDetail);
+            playerResponseDtoList.add(playerResponseDto);
+        }
+
+        return playerResponseDtoList;
     }
 }
