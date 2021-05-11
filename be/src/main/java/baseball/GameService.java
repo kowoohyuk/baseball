@@ -38,7 +38,7 @@ public class GameService {
 
     public GameTeamScore LastGameTeamScoreByIdAndTeamId(boolean playStatus, Long gameId, Long teamId) {
         if (playStatus) {
-            return gameRepository.findLastGameTeamScoreByIdAndTeamId(gameId, teamId).orElseThrow();
+            return gameRepository.findLastGameTeamScoreByIdAndTeamId(gameId, teamId).orElseThrow(NullPointerException::new);
         }
         return new GameTeamScore();
     }

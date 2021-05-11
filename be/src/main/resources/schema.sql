@@ -1,3 +1,4 @@
+create database baseball;
 use baseball;
 
 drop table team;
@@ -31,9 +32,9 @@ create table game (
 drop table game_player_detail;
 create table game_player_detail (
                         id int not null auto_increment,
-                        at_bat int,
-                        out_count int,
-                        plate_appearance int,
+                        at_bat int default 0,
+                        out_count int default 0,
+                        plate_appearance int default 0,
                         player_id int not null,
                         game_id int not null,
                         primary key (id),
