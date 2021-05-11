@@ -25,7 +25,7 @@ public class TeamService {
     }
 
     public List<Player> playersById(Long TeamId) {
-        Team team = teamRepository.findById(TeamId).orElseThrow(NullPointerException::new);
+        Team team = teamRepository.findTeamById(TeamId).orElseThrow(NullPointerException::new);
         return team.getPlayers();
     }
 

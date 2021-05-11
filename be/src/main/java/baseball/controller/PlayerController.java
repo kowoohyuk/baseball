@@ -13,4 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/players")
 public class PlayerController{
+
+    @PutMapping("/{playerId}")
+    public ResponseEntity updatePlayer(@PathVariable Long playerId, @RequestBody PlayerRequestDto playerRequestDto) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

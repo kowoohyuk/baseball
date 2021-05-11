@@ -3,6 +3,7 @@ package baseball.domain;
 import baseball.dto.PlayerDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,11 +16,11 @@ public class Player {
     private String name;
     private String role;
 
+    @Column(value = "player_id")
+    private Set<GamePlayerDetail> gamePlayerDetails = new HashSet<>();
+
     @Column(value = "player_status")
     private boolean status;
-
-    @Column(value = "player_id")
-    private Set<GamePlayerDetail> playerDetails = new HashSet<>();
 
     public Player() {
     }
@@ -28,10 +29,6 @@ public class Player {
         this.name = name;
         this.role = role;
         this.status = status;
-    }
-
-    public void addPlayer(GamePlayerDetail gamePlayerDetail) {
-        playerDetails.add(gamePlayerDetail);
     }
 
     public Long getId() {

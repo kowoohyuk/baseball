@@ -1,6 +1,7 @@
 package baseball.repository;
 
 import baseball.domain.Game;
+import baseball.domain.GamePlayerDetail;
 import baseball.domain.GameTeamScore;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,4 +20,9 @@ public interface GameRepository extends CrudRepository<Game, Long> {
 
     @Query("SELECT game.play_status FROM game WHERE game.id = :gameId")
     boolean findPlayStatusById(Long gameId);
+
+    @Query("SELECT game_player_detail.id, game_player_detail.at_bat, game_player_detail.out_count, game_player_detail.plate_appearance " +
+            "FROM game_player_detail join game ON game.id = game_player_detail.player_id " +
+            "WHERE game_player_detail.game_id = :gameId AND game_player_detail.player_id = :playerId ")
+    Optional<GamePlayerDetail> gamePlayerDetailByPlayerId(Long gameId,Long playerId);
 }
