@@ -4,7 +4,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Team {
 
@@ -57,5 +60,9 @@ public class Team {
 
     public Player findFirstPlayer() {
         return players.get(0);
+    }
+
+    public Player findLastPlayer() {
+        return players.get(players.size()-1);
     }
 }

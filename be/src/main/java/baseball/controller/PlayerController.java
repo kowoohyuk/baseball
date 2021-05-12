@@ -26,7 +26,8 @@ public class PlayerController {
     @PutMapping("/{playerId}")
     public ResponseEntity updatePlayer(@PathVariable Long playerId, @RequestBody PlayerRequestDto playerRequestDto) {
         Team team = teamService.findTeamByPlayerId(playerId);
-        gameService.updateGamePlayerDetail(playerId, playerRequestDto.getGameId(), team, playerRequestDto.getAtBat());
+        gameService.updateGamePlayerDetail(playerId, playerRequestDto.getGameId(),playerRequestDto.getAtBat());
+       /* playerService.remakePlayerStatus(team,playerId);*/
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

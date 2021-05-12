@@ -10,6 +10,9 @@ public class GameTeamScore {
     private int score = 0;
     private int round = 0;
 
+    @Column(value = "game_id")
+    private Long gameId;
+
     @Column(value = "team_id")
     private Long teamId;
 
@@ -36,9 +39,10 @@ public class GameTeamScore {
     public Long getTeamId() {
         return teamId;
     }
+
     public int largerRound(GameTeamScore otherTeam) {
         int otherTeamRound = otherTeam.getRound();
-        return Math.max(score, otherTeamRound);
+        return Math.max(round, otherTeamRound);
     }
 
     public void updateScore(int score) {

@@ -16,7 +16,8 @@ public interface GameRepository extends CrudRepository<Game, Long> {
 
     @Query("SELECT game_team_score.score, game_team_score.round, game_team_score.id FROM game_team_score " +
             "INNER JOIN game ON game.id = game_team_score.game_id " +
-            "WHERE game_team_score.game_id = :gameId AND game_team_score.team_id = :teamId")
+            "WHERE game_team_score.game_id = :gameId AND game_team_score.team_id = :teamId " +
+            "ORDER BY game_team_score.round desc limit 1")
     Optional<GameTeamScore> findLastGameTeamScoreByIdAndTeamId(Long gameId, Long teamId);
 
     @Query("SELECT game.play_status FROM game WHERE game.id = :gameId")
@@ -26,6 +27,11 @@ public interface GameRepository extends CrudRepository<Game, Long> {
             "FROM game_player_detail join game ON game.id = game_player_detail.game_id " +
             "WHERE game_player_detail.game_id = :gameId AND game_player_detail.player_id = :playerId ")
     Optional<GamePlayerDetail> gamePlayerDetailByPlayerId(Long gameId, Long playerId);
+
+    @Query("SELECT game_team_score.score FROM game_team_score " +
+            "INNER JOIN game ON game.id = game_team_score.game_id " +
+            "WHERE game_team_score.game_id = :gameId AND game_team_score.team_id = :teamId ")
+    List<Integer> findScores(Long gameId, Long teamId);
 
     @Modifying
     @Query("UPDATE game SET game.play_status = true  WHERE game.id = :gameId")

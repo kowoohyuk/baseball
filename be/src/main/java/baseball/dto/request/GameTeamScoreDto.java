@@ -8,15 +8,15 @@ public class GameTeamScoreDto {
     private Long gameId;
 
     @JsonProperty(value = "home")
-    private int homeScore;
+    private Integer homeScore;
 
     @JsonProperty(value = "away")
-    private int awayScore;
+    private Integer awayScore;
 
     private int round;
 
 
-    public GameTeamScoreDto(Long gameId, int homeScore, int awayScore, int round) {
+    public GameTeamScoreDto(Long gameId, Integer homeScore, Integer awayScore, int round) {
         this.gameId = gameId;
         this.homeScore = homeScore;
         this.awayScore = awayScore;
@@ -27,11 +27,11 @@ public class GameTeamScoreDto {
         return gameId;
     }
 
-    public int getTeamScore() {
+    public Integer getTeamScore() {
         return homeScore;
     }
 
-    public int getAwayScore() {
+    public Integer getAwayScore() {
         return awayScore;
     }
 

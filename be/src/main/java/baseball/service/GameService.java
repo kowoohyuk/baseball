@@ -71,17 +71,12 @@ public class GameService {
             PlayerResponseDto playerResponseDto = PlayerResponseDto.of(player, gamePlayerDetail);
             playerResponseDtoList.add(playerResponseDto);
         }
-        /*gameRepository.save(game);*/
+        gameRepository.save(game);
         return playerResponseDtoList;
     }
 
-    public void isPlay(Long gameId) {
-        gameRepository.isPlay(gameId);
-    }
-
-    public void updateGamePlayerDetail(Long playerId, Long gameId, Team team, boolean atBat) {
+    public void updateGamePlayerDetail(Long playerId, Long gameId, boolean atBat) {
         Game game = findGameById(gameId);
-        Player player = team.findPlayer(playerId);
         GamePlayerDetail gamePlayerDetail = game.findGamePlayerDetail(playerId);
         gamePlayerDetail.update(atBat);
         gameRepository.save(game);
@@ -91,10 +86,24 @@ public class GameService {
         Game game = findGameById(changeGameTeamScoreDto.getGameId());
         Long homeTeamId = game.getHome();
         Long awayTeamId = game.getAway();
-        Long correctTeamId = (homeTeamId.equals(changeGameTeamScoreDto.getTeamId())) ? homeTeamId : awayTeamId;
         int round = changeGameTeamScoreDto.getRound();
-        GameTeamScore gameTeamScore = GameTeamScore.of(++round);
-        gameTeamScore.setTeamId(correctTeamId);
+        GameTeamScore gameTeamScore;
+
+        if (homeTeamId.equals(changeGameTeamScoreDto.getTeamId())) {
+            gameTeamScore = GameTeamScore.of(round);
+            gameTeamScore.setTeamId(awayTeamId);
+        } else {
+            gameTeamScore = GameTeamScore.of(++round);
+            gameTeamScore.setTeamId(homeTeamId);
+        }
+
+        game.addScores(gameTeamScore);
+        gameRepository.save(game);
+    }
+
+    public void createFirstGameScore(Game game) {
+        GameTeamScore gameTeamScore = GameTeamScore.of(1);
+        gameTeamScore.setTeamId(game.getHome());
         game.addScores(gameTeamScore);
         gameRepository.save(game);
     }
@@ -103,17 +112,34 @@ public class GameService {
         Game game = findGameById(gameId);
         int round = gameTeamScoreDto.getRound();
 
-        GameTeamScore homeTeamScore = game.findGameTeamScore(round, game.getHome());
-        GameTeamScore awayTeamScore = game.findGameTeamScore(round, game.getAway());
-
-        if (gameTeamScoreDto.getTeamScore() == 0) {
+        if (gameTeamScoreDto.getTeamScore() == null) {
+            GameTeamScore awayTeamScore = game.findGameTeamScore(round, game.getAway());
             awayTeamScore.updateScore(gameTeamScoreDto.getAwayScore());
             game.addScores(awayTeamScore);
         }
-        if (gameTeamScoreDto.getAwayScore() == 0) {
+        if (gameTeamScoreDto.getAwayScore() == null) {
+            GameTeamScore homeTeamScore = game.findGameTeamScore(round, game.getHome());
             homeTeamScore.updateScore(gameTeamScoreDto.getTeamScore());
             game.addScores(homeTeamScore);
         }
         gameRepository.save(game);
+    }
+
+    public int findAllScore(Long gameId, Long teamId){
+        List<Integer> scores = findScores(gameId,teamId);
+        int allScore =0;
+        for(int score : scores) {
+            allScore += score;
+        }
+        return allScore;
+    }
+
+    public List<Integer> findScores(Long gameId, Long teamId){
+        List<Integer> scores = gameRepository.findScores(gameId, teamId);
+        return scores;
+    }
+
+    public void isPlay(Long gameId){
+        gameRepository.isPlay(gameId);
     }
 }

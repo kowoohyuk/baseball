@@ -2,11 +2,10 @@ package baseball.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Player {
 
@@ -18,8 +17,8 @@ public class Player {
     @Column(value = "player_status")
     private boolean status;
 
-    @MappedCollection(idColumn = "player_id")
-    List<GamePlayerDetail> gamePlayerDetails = new ArrayList<>();
+    @Column(value = "player_id")
+    Set<GamePlayerDetail> gamePlayerDetails = new HashSet<>();
 
     public Player() {
     }
@@ -48,6 +47,10 @@ public class Player {
 
     public void isPlay(){
         status = true;
+    }
+
+    public void isNotPlay(){
+        status = false;
     }
 
     public void addGamePlayerDetail(GamePlayerDetail gamePlayerDetail){

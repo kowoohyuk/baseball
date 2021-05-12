@@ -39,4 +39,18 @@ public class PlayerService {
         }
     }
 
+    public void remakePlayerStatus(Team team, Long playerId) {
+        Player lastPlayer = team.findLastPlayer();
+        Player finishBattingPlayer = team.findPlayer(playerId);
+        finishBattingPlayer.isNotPlay();
+        if (lastPlayer.equals(finishBattingPlayer)) {
+            Player firstPlayer = team.findFirstPlayer();
+            firstPlayer.isPlay();
+            teamRepository.save(team);
+            return;
+        }
+        Player nextPlayer = team.findPlayer(playerId + 1);
+        nextPlayer.isPlay();
+        teamRepository.save(team);
+    }
 }

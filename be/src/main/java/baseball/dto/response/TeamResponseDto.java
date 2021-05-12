@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-import java.util.Set;
 
 public class TeamResponseDto {
 
@@ -39,9 +38,4 @@ public class TeamResponseDto {
     public Long getPitcherId() {
         return pitcherId;
     }
-
-    public static TeamResponseDto of(Long pitcherId, List<PlayerResponseDto> playerList, GameTeamScore gameTeamScore) {
-        return new TeamResponseDto(pitcherId, gameTeamScore.getScore(), playerList, gameTeamScore);
-    }
-
 }
