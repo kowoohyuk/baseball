@@ -1,13 +1,9 @@
 package baseball.domain;
 
-import baseball.dto.request.GamePlayerDetailRequestDto;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 public class GamePlayerDetail {
 
-    @Id
-    private Long id;
     private int atBat;
     private int outCount;
     private int plateAppearance;
@@ -15,19 +11,22 @@ public class GamePlayerDetail {
     @Column(value = "player_id")
     private Long playerId;
 
+    @Column(value = "game_id")
+    private Long gameId;
+
     public GamePlayerDetail() {
     }
 
-    public GamePlayerDetail( int atBat, int outCount, int plateAppearance) {
+    public GamePlayerDetail(int atBat, int outCount, int plateAppearance) {
         this.atBat = atBat;
         this.outCount = outCount;
         this.plateAppearance = plateAppearance;
     }
 
-    public void updatePlayerDetail(GamePlayerDetailRequestDto gamePlayerDetailRequestDto) {
-        this.atBat = gamePlayerDetailRequestDto.getAtBat();
-        this.outCount = gamePlayerDetailRequestDto.getOutCount();
-        this.plateAppearance = gamePlayerDetailRequestDto.getPlateAppearance();
+    public void updatePlayerDetail(GamePlayerDetail gamePlayerDetail) {
+        this.atBat = gamePlayerDetail.getAtBat();
+        this.outCount = gamePlayerDetail.getOutCount();
+        this.plateAppearance = gamePlayerDetail.getPlateAppearance();
     }
 
     public int getAtBat() {
@@ -42,7 +41,24 @@ public class GamePlayerDetail {
         return plateAppearance;
     }
 
+    public Long getPlayerId() {
+        return playerId;
+    }
+
+    public Long getGameId() {
+        return gameId;
+    }
+
     public void setPlayerId(Long playerId) {
         this.playerId = playerId;
+    }
+
+    public void update(boolean isAtBat) {
+        plateAppearance++;
+        if (isAtBat) {
+            atBat++;
+            return;
+        }
+        outCount++;
     }
 }

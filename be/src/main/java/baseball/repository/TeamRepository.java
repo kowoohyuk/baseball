@@ -20,4 +20,11 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
             "INNER JOIN team ON player.team_id = team.id " +
             "WHERE player.team_id = :teamId AND player.role = '투수'")
     Optional<Player> findPitcherById(Long teamId);
+
+    @Query("SELECT player.team_id FROM player " +
+            "INNER JOIN team ON player.team_id = team.id " +
+            "WHERE player.id = :playerId")
+    Long findTeamIdByPlayerId(Long playerId);
+
+    Optional<GamePlayerDetail>findGamePlayerDetailByPlayerIdAndGameId(Long playerId, Long gameId);
 }

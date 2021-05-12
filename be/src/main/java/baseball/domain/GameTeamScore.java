@@ -1,6 +1,7 @@
 package baseball.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 public class GameTeamScore {
 
@@ -9,10 +10,13 @@ public class GameTeamScore {
     private int score = 0;
     private int round = 0;
 
+    @Column(value = "team_id")
+    private Long teamId;
+
     public GameTeamScore() {
     }
 
-    public GameTeamScore(int score, int round) {
+    private GameTeamScore(int score, int round) {
         this.score = score;
         this.round = round;
     }
@@ -29,12 +33,27 @@ public class GameTeamScore {
         return round;
     }
 
+    public Long getTeamId() {
+        return teamId;
+    }
     public int largerRound(GameTeamScore otherTeam) {
         int otherTeamRound = otherTeam.getRound();
         return Math.max(score, otherTeamRound);
     }
 
+    public void updateScore(int score) {
+        this.score = score;
+    }
+
+    public void setTeamId(Long teamId){
+        this.teamId = teamId;
+    }
+
     public boolean isTurn(int round){
         return round!=this.round;
+    }
+
+    public static GameTeamScore of(int round){
+        return new GameTeamScore(0,round);
     }
 }

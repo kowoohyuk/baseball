@@ -50,8 +50,8 @@ public class Team {
         return players;
     }
 
-    public Player findPlayer(Player searchPlayer) {
-        return players.stream().filter(player -> player.equals(searchPlayer)).findFirst()
+    public Player findPlayer(Long playerId) {
+        return players.stream().filter(player -> player.getId().equals(playerId)).findFirst()
                 .orElseThrow(NullPointerException::new);
     }
 

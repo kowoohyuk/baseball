@@ -8,7 +8,7 @@ public class GameResponseDto {
     private TeamResponseDto home;
     private TeamResponseDto away;
 
-    public GameResponseDto() {
+    private GameResponseDto() {
     }
 
     public GameResponseDto(int round, boolean turn, TeamResponseDto home, TeamResponseDto away) {
@@ -32,6 +32,14 @@ public class GameResponseDto {
 
     public TeamResponseDto getAway() {
         return away;
+    }
+
+    public void setHome(TeamResponseDto home) {
+        this.home = home;
+    }
+
+    public void setAway(TeamResponseDto away) {
+        this.away = away;
     }
 
     public static GameResponseDto of(TeamResponseDto home, TeamResponseDto away) {

@@ -23,7 +23,7 @@ public class Game {
     @Column(value = "game_id")
     private Set<GameTeamScore> scores = new HashSet<>();
 
-    @MappedCollection(idColumn = "game_id" , keyColumn = "id")
+    @MappedCollection(idColumn = "game_id", keyColumn = "game_key")
     private List<GamePlayerDetail> playerDetails = new ArrayList<>();
 
     @Column(value = "play_status")
@@ -36,6 +36,20 @@ public class Game {
 
     public void addPlayerDetail(GamePlayerDetail gamePlayerDetail) {
         playerDetails.add(gamePlayerDetail);
+    }
+
+    public GamePlayerDetail findGamePlayerDetail(Long playerId){
+        return playerDetails.stream()
+                .filter(gamePlayerDetail -> gamePlayerDetail.getPlayerId().equals(playerId))
+                .findFirst()
+                .orElseThrow(NullPointerException::new);
+    }
+
+    public GameTeamScore findGameTeamScore(int round, Long teamId) {
+        return scores.stream()
+                .filter(gameScore -> gameScore.getRound() == round && gameScore.getTeamId() == teamId)
+                .findFirst()
+                .orElseThrow(NullPointerException::new);
     }
 
     public void addScores(GameTeamScore gameTeamScore) {
@@ -66,7 +80,12 @@ public class Game {
         return playStatus;
     }
 
+    public void isPlay(){
+        playStatus = true;
+    }
+
     public static Game of(Team home, Team away) {
         return new Game(home.getId(), away.getId());
     }
+
 }
