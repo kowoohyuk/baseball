@@ -29,7 +29,6 @@ create table game (
                         primary key (id),
                         foreign key (away_team_id) references team(id),
                         foreign key (home_team_id) references team(id),
-                        foreign key (last_batting_player) references player(id)
 );
 
 drop table game_player_detail;

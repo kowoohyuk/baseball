@@ -93,6 +93,6 @@ public class GameController {
         List<PlayerResponseDto> playerResponseDtoList = gameService.createPlayerResponseDtoList(gameId, playStatus, playerService.playersById(teamId));
         int score = gameService.findAllScore(gameId, teamId);
         Team team = teamService.findTeamById(teamId);
-        return new TeamResponseDto(pitcher.getId(), team.getName(), score, playerResponseDtoList, gameTeamScore);
+        return new TeamResponseDto(pitcher.getId(), team.getId(), team.getName(), score, playerResponseDtoList, gameTeamScore);
     }
 }

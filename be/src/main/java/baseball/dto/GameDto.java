@@ -1,14 +1,15 @@
 package baseball.dto;
 
 import baseball.domain.Game;
+import baseball.domain.Team;
 
 public class GameDto {
 
     private Long id;
-    private Long home;
-    private Long away;
+    private String home;
+    private String away;
 
-    private GameDto(Long id, Long home, Long away) {
+    public GameDto(Long id, String home, String away) {
         this.id = id;
         this.home = home;
         this.away = away;
@@ -18,15 +19,15 @@ public class GameDto {
         return id;
     }
 
-    public Long getHome() {
+    public String getHome() {
         return home;
     }
 
-    public Long getAway() {
+    public String getAway() {
         return away;
     }
 
-    public static GameDto of(Game game) {
-        return new GameDto(game.getId(), game.getHome(), game.getAway());
+    public static GameDto of(Game game, Team home, Team away) {
+        return new GameDto(game.getId(), home.getName(), away.getName());
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class TeamResponseDto {
 
+    private Long teamId;
     @JsonProperty("member_list")
     private List<PlayerResponseDto> playerList;
     private int score;
@@ -17,8 +18,9 @@ public class TeamResponseDto {
     @JsonIgnore
     private GameTeamScore gameTeamScore;
 
-    public TeamResponseDto(Long pitcherId, String name, int score, List<PlayerResponseDto> playerList, GameTeamScore gameTeamScore) {
+    public TeamResponseDto(Long pitcherId, Long teamId, String name, int score, List<PlayerResponseDto> playerList, GameTeamScore gameTeamScore) {
         this.pitcherId = pitcherId;
+        this.teamId = teamId;
         this.name = name;
         this.score = score;
         this.playerList = playerList;
@@ -43,5 +45,9 @@ public class TeamResponseDto {
 
     public String getName() {
         return name;
+    }
+
+    public Long getTeamId() {
+        return teamId;
     }
 }

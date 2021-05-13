@@ -16,9 +16,11 @@ import java.util.List;
 public class GameService {
 
     private GameRepository gameRepository;
+    private TeamService teamService;
 
-    public GameService(GameRepository gameRepository) {
+    public GameService(GameRepository gameRepository, TeamService teamService) {
         this.gameRepository = gameRepository;
+        this.teamService = teamService;
     }
 
     public List<GameDto> createGameDtoList(List<Team> teamList) {
@@ -28,7 +30,7 @@ public class GameService {
         for (int i = 0; i < teamList.size() - 1; i += 2) {
             Game game = Game.of(teamList.get(i), teamList.get(i + 1));
             gameRepository.save(game);
-            gameDtoList.add(GameDto.of(game));
+            gameDtoList.add(GameDto.of(game, teamService.findTeamById(game.getHome()), teamService.findTeamById(game.getAway())));
         }
         return gameDtoList;
     }
