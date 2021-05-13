@@ -26,5 +26,5 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
             "WHERE player.id = :playerId")
     Long findTeamIdByPlayerId(Long playerId);
 
-    Optional<GamePlayerDetail>findGamePlayerDetailByPlayerIdAndGameId(Long playerId, Long gameId);
+    Optional<GamePlayerDetail> findGamePlayerDetailByPlayerIdAndGameId(Long playerId, Long gameId);
 }

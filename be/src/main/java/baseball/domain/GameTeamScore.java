@@ -49,15 +49,15 @@ public class GameTeamScore {
         this.score = score;
     }
 
-    public void setTeamId(Long teamId){
+    public void setTeamId(Long teamId) {
         this.teamId = teamId;
     }
 
-    public boolean isTurn(int round){
-        return round!=this.round;
+    public boolean isTurn(int round) {
+        return round != this.round;
     }
 
-    public static GameTeamScore of(int round){
-        return new GameTeamScore(0,round);
+    public static GameTeamScore of(int round) {
+        return new GameTeamScore(0, round);
     }
 }

@@ -45,7 +45,7 @@ public class PlayerResponseDto {
     }
 
     public static PlayerResponseDto of(Player player, GamePlayerDetail gamePlayerDetail) {
-        return new PlayerResponseDto(player.getId(), player.getName(), player.isStatus(),
+        return new PlayerResponseDto(player.getId(), player.getName(), player.getStatus(),
                 gamePlayerDetail.getAtBat(), gamePlayerDetail.getOutCount(), gamePlayerDetail.getPlateAppearance());
     }
 }

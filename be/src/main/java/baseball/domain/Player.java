@@ -18,7 +18,7 @@ public class Player {
     private boolean status;
 
     @Column(value = "player_id")
-    Set<GamePlayerDetail> gamePlayerDetails = new HashSet<>();
+    private Set<GamePlayerDetail> gamePlayerDetails = new HashSet<>();
 
     public Player() {
     }
@@ -41,19 +41,19 @@ public class Player {
         return role;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void isPlay(){
+    public void isPlay() {
         status = true;
     }
 
-    public void isNotPlay(){
+    public void isNotPlay() {
         status = false;
     }
 
-    public void addGamePlayerDetail(GamePlayerDetail gamePlayerDetail){
+    public void addGamePlayerDetail(GamePlayerDetail gamePlayerDetail) {
         this.gamePlayerDetails.add(gamePlayerDetail);
     }
 

@@ -66,4 +66,3 @@ values ('Starve','타자', false,6),
        ('Kyle','타자', false,6),
        ('json','타자', false,6),
        ('young','투수', false,6);
-

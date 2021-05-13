@@ -14,7 +14,7 @@ public interface GameRepository extends CrudRepository<Game, Long> {
 
     List<Game> findAll();
 
-    @Query("SELECT game_team_score.score, game_team_score.round, game_team_score.id FROM game_team_score " +
+    @Query("SELECT game_team_score.id, game_team_score.score, game_team_score.round, game_team_score.id FROM game_team_score " +
             "INNER JOIN game ON game.id = game_team_score.game_id " +
             "WHERE game_team_score.game_id = :gameId AND game_team_score.team_id = :teamId " +
             "ORDER BY game_team_score.round desc limit 1")

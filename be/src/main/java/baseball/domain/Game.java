@@ -23,6 +23,9 @@ public class Game {
     @Column(value = "game_id")
     private Set<GamePlayerDetail> playerDetails = new HashSet<>();
 
+    @Column(value = "last_batting_player")
+    private Long lastBattingPlayer;
+
     @Column(value = "play_status")
     private boolean playStatus;
 
@@ -35,7 +38,7 @@ public class Game {
         playerDetails.add(gamePlayerDetail);
     }
 
-    public GamePlayerDetail findGamePlayerDetail(Long playerId){
+    public GamePlayerDetail findGamePlayerDetail(Long playerId) {
         return playerDetails.stream()
                 .filter(gamePlayerDetail -> gamePlayerDetail.getPlayerId().equals(playerId))
                 .findFirst()
@@ -65,6 +68,14 @@ public class Game {
         return away;
     }
 
+    public Long getLastBattingPlayer() {
+        return lastBattingPlayer;
+    }
+
+    public void setLastBattingPlayer(Long lastBattingPlayer) {
+        this.lastBattingPlayer = lastBattingPlayer;
+    }
+
     public Set<GameTeamScore> getScores() {
         return scores;
     }
@@ -77,7 +88,7 @@ public class Game {
         return playStatus;
     }
 
-    public void isPlay(){
+    public void isPlay() {
         playStatus = true;
     }
 

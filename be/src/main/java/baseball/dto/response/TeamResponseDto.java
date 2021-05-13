@@ -12,12 +12,14 @@ public class TeamResponseDto {
     private List<PlayerResponseDto> playerList;
     private int score;
     private Long pitcherId;
+    private String name;
 
     @JsonIgnore
     private GameTeamScore gameTeamScore;
 
-    public TeamResponseDto(Long pitcherId, int score, List<PlayerResponseDto> playerList, GameTeamScore gameTeamScore) {
+    public TeamResponseDto(Long pitcherId, String name, int score, List<PlayerResponseDto> playerList, GameTeamScore gameTeamScore) {
         this.pitcherId = pitcherId;
+        this.name = name;
         this.score = score;
         this.playerList = playerList;
         this.gameTeamScore = gameTeamScore;
@@ -37,5 +39,9 @@ public class TeamResponseDto {
 
     public Long getPitcherId() {
         return pitcherId;
+    }
+
+    public String getName() {
+        return name;
     }
 }

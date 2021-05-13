@@ -1,12 +1,11 @@
 package baseball.controller;
 
 import baseball.domain.Team;
-import org.springframework.http.HttpStatus;
+import baseball.repository.TeamRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import baseball.repository.TeamRepository;
 
 @RestController
 public class TeamController {
@@ -20,6 +19,6 @@ public class TeamController {
     @PostMapping("/team")
     public ResponseEntity createTeam(@RequestBody Team team) {
         teamRepository.save(team);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().body("성공");
     }
 }

@@ -3,6 +3,7 @@ package baseball.controller;
 import baseball.domain.Game;
 import baseball.domain.GameTeamScore;
 import baseball.domain.Player;
+import baseball.domain.Team;
 import baseball.dto.GameListDto;
 import baseball.dto.request.ChangeGameTeamScoreDto;
 import baseball.dto.request.GameTeamScoreDto;
@@ -39,13 +40,15 @@ public class GameController {
     @GetMapping("/{gameId}")
     public ResponseEntity readGame(@PathVariable Long gameId) {
         Game game = gameService.findGameById(gameId);
-        boolean playStatus = gameService.findPlayStatusById(gameId);
-        if(!playStatus) {
+        boolean playStatus = game.getPlayStatus();
+        if (!playStatus) {
             gameService.createFirstGameScore(game);
+            playerService.firstGamePlayerStatus(teamService.findTeamById(game.getHome()), teamService.findTeamById(game.getAway()));
         }
-        playerService.changePlayerStatus(playStatus, teamService.findTeamById(game.getHome()), teamService.findTeamById(game.getAway()));
+
         TeamResponseDto homeTeamResponseDto = createTeamResponseDto(playStatus, gameId, game.getHome());
         TeamResponseDto awayTeamResponseDto = createTeamResponseDto(playStatus, gameId, game.getAway());
+
         gameService.isPlay(gameId);
 
         if (playStatus) {
@@ -56,7 +59,16 @@ public class GameController {
 
     @PostMapping("/{gameId}")
     public ResponseEntity createGameScore(@PathVariable Long gameId, @RequestBody ChangeGameTeamScoreDto changeGameTeamScoreDto) {
+        Game game = gameService.findGameById(gameId);
+        if (game.getHome().equals(changeGameTeamScoreDto.getTeamId()) && changeGameTeamScoreDto.getRound() == 1) {
+            playerService.firstChangePlayerStatus(game);
+        } else {
+            playerService.changePlayerStatus(game, changeGameTeamScoreDto);
+        }
+
+        gameService.changeLastBattingPlayer(changeGameTeamScoreDto);
         gameService.createGameHomeTeamScore(changeGameTeamScoreDto);
+
         return ResponseEntity.ok().body("성공");
     }
 
@@ -69,9 +81,9 @@ public class GameController {
     @GetMapping("/{gameId}/detail-score")
     public ResponseEntity<GameScoreListDto> readDetailScore(@PathVariable Long gameId) {
         Game game = gameService.findGameById(gameId);
-        List<Integer> homeScores = gameService.findScores(gameId,game.getHome());
-        List<Integer> awayScores = gameService.findScores(gameId,game.getAway());
-        GameScoreListDto gameScoreListDto = new GameScoreListDto(homeScores,awayScores);
+        List<Integer> homeScores = gameService.findScores(gameId, game.getHome());
+        List<Integer> awayScores = gameService.findScores(gameId, game.getAway());
+        GameScoreListDto gameScoreListDto = new GameScoreListDto(homeScores, awayScores);
         return ResponseEntity.ok().body(gameScoreListDto);
     }
 
@@ -79,7 +91,8 @@ public class GameController {
         GameTeamScore gameTeamScore = gameService.LastGameTeamScoreByIdAndTeamId(playStatus, gameId, teamId);
         Player pitcher = playerService.findPitcherByTeamId(teamId);
         List<PlayerResponseDto> playerResponseDtoList = gameService.createPlayerResponseDtoList(gameId, playStatus, playerService.playersById(teamId));
-        int score = gameService.findAllScore(gameId,teamId);
-        return new TeamResponseDto(pitcher.getId(), score, playerResponseDtoList, gameTeamScore);
+        int score = gameService.findAllScore(gameId, teamId);
+        Team team = teamService.findTeamById(teamId);
+        return new TeamResponseDto(pitcher.getId(), team.getName(), score, playerResponseDtoList, gameTeamScore);
     }
 }

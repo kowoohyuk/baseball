@@ -25,22 +25,21 @@ create table game (
                         away_team_id int not null,
                         home_team_id int not null,
                         play_status tinyint(1) not null default 0,
+                        last_batting_player int,
                         primary key (id),
                         foreign key (away_team_id) references team(id),
-                        foreign key (home_team_id) references team(id)
+                        foreign key (home_team_id) references team(id),
+                        foreign key (last_batting_player) references player(id)
 );
 
 drop table game_player_detail;
 create table game_player_detail (
-                        id int not null auto_increment,
                         at_bat int default 0,
                         out_count int default 0,
                         plate_appearance int default 0,
                         player_id int not null,
                         game_id int not null,
-                        game_key int,
-                        player_key int,
-                        primary key (id),
+                        primary key (game_id,player_id),
                         foreign key (player_id) references player(id),
                         foreign key (game_id) references game(id)
 );

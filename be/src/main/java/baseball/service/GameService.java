@@ -125,21 +125,28 @@ public class GameService {
         gameRepository.save(game);
     }
 
-    public int findAllScore(Long gameId, Long teamId){
-        List<Integer> scores = findScores(gameId,teamId);
-        int allScore =0;
-        for(int score : scores) {
+    public int findAllScore(Long gameId, Long teamId) {
+        List<Integer> scores = findScores(gameId, teamId);
+        int allScore = 0;
+        for (int score : scores) {
             allScore += score;
         }
         return allScore;
     }
 
-    public List<Integer> findScores(Long gameId, Long teamId){
+    public List<Integer> findScores(Long gameId, Long teamId) {
         List<Integer> scores = gameRepository.findScores(gameId, teamId);
         return scores;
     }
 
-    public void isPlay(Long gameId){
+    public void changeLastBattingPlayer(ChangeGameTeamScoreDto changeGameTeamScoreDto) {
+        Game game = findGameById(changeGameTeamScoreDto.getGameId());
+        game.setLastBattingPlayer(changeGameTeamScoreDto.getPlayerId());
+        gameRepository.save(game);
+    }
+
+
+    public void isPlay(Long gameId) {
         gameRepository.isPlay(gameId);
     }
 }

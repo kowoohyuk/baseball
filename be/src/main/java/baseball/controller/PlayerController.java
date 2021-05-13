@@ -5,7 +5,6 @@ import baseball.dto.request.PlayerRequestDto;
 import baseball.service.GameService;
 import baseball.service.PlayerService;
 import baseball.service.TeamService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +25,8 @@ public class PlayerController {
     @PutMapping("/{playerId}")
     public ResponseEntity updatePlayer(@PathVariable Long playerId, @RequestBody PlayerRequestDto playerRequestDto) {
         Team team = teamService.findTeamByPlayerId(playerId);
-        gameService.updateGamePlayerDetail(playerId, playerRequestDto.getGameId(),playerRequestDto.getAtBat());
-       /* playerService.remakePlayerStatus(team,playerId);*/
-        return new ResponseEntity<>(HttpStatus.OK);
+        playerService.remarkPlayerStatus(team, playerId);
+        gameService.updateGamePlayerDetail(playerId, playerRequestDto.getGameId(), playerRequestDto.getAtBat());
+        return ResponseEntity.ok().body("성공");
     }
 }

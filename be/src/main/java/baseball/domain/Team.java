@@ -58,11 +58,20 @@ public class Team {
                 .orElseThrow(NullPointerException::new);
     }
 
+    public Player findStatusTruePlayer() {
+        return players.stream().filter(Player::getStatus).findFirst()
+                .orElseThrow(NullPointerException::new);
+    }
+
+    public void changeStatusFalse() {
+        players.stream().forEach(Player::isNotPlay);
+    }
+
     public Player findFirstPlayer() {
         return players.get(0);
     }
 
     public Player findLastPlayer() {
-        return players.get(players.size()-1);
+        return players.get(players.size() - 1);
     }
 }
