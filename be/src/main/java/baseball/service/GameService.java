@@ -119,9 +119,17 @@ public class GameService {
             awayTeamScore.updateScore(gameTeamScoreDto.getAwayScore());
             game.addScores(awayTeamScore);
         }
-        if (gameTeamScoreDto.getAwayScore() == null) {
+        else if (gameTeamScoreDto.getAwayScore() == null) {
             GameTeamScore homeTeamScore = game.findGameTeamScore(round, game.getHome());
             homeTeamScore.updateScore(gameTeamScoreDto.getTeamScore());
+            game.addScores(homeTeamScore);
+        } else {
+            GameTeamScore awayTeamScore = game.findGameTeamScore(round, game.getAway());
+            awayTeamScore.updateScore(gameTeamScoreDto.getAwayScore());
+            GameTeamScore homeTeamScore = game.findGameTeamScore(round, game.getHome());
+            homeTeamScore.updateScore(gameTeamScoreDto.getTeamScore());
+
+            game.addScores(awayTeamScore);
             game.addScores(homeTeamScore);
         }
         gameRepository.save(game);
