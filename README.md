@@ -25,6 +25,9 @@
 ### [회고](https://github.com/kowoohyuk/baseball/wiki/%ED%9A%8C%EA%B3%A0)
 ---
 
+## 데모 시연
+![](https://github.com/95degree/socketStudy/blob/main/KakaoTalk_20210723_222534363.gif)
+
 ## 🔨Team Rule
 
 ### Time Table
