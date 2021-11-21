@@ -21,6 +21,10 @@
 ## 🔗 [Links](#Links)
 
 ### [Rule](https://github.com/kowoohyuk/baseball/wiki/Rule)
+---
+
+## 데모 시연
+![](https://github.com/95degree/socketStudy/blob/main/KakaoTalk_20210723_222534363.gif)  
 
 ---
 
